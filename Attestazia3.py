@@ -11,18 +11,21 @@ from aiogram.contrib.middlewares.logging import LoggingMiddleware
 
 bot = Bot(token='5942679802:AAFpR58M3nIuqlm9zxQd5o_3t8-7ID_IYLE')
 
+"""
 WEBHOOK_HOST = 'https://601b-2a02-2168-ac63-9900-442-eadb-74e8-8047.eu.ngrok.io' #адрес сервера
 WEBHOOK_PATH = '' #путь до апи
 WEBHOOK_URL = f'{WEBHOOK_HOST}{WEBHOOK_PATH}' #адрес, на который принимаются запросы
 
 WEBAPP_HOST = '127.0.0.1'
 WEBAPP_PORT = 3001
+"""
 
 logging.basicConfig(level = logging.INFO)
 dp = Dispatcher(bot)
 
 dp.middleware.setup(LoggingMiddleware())
 
+"""
 async def on_startup(dp):
     await bot.set_webhook(WEBHOOK_URL)
 
@@ -30,13 +33,17 @@ async def on_shutdown(dp):
     logging.warning('Shutting down...')
     await bot.delete_webhook()
     logging.warning('Bye!')
+    """
 
 @dp.message_handler(commands=['start'])
 async def start(message: types.Message):
     return SendMessage(message.chat.id, message.text)
 
 if __name__ == '__main__':
-    start_webhook(
+    executor.start_polling(skip_updates = True, dp)
+    
+    
+    """start_webhook(
         dispatcher=dp,
         webhook_path=WEBHOOK_PATH,
         on_startup = on_startup,
@@ -45,7 +52,7 @@ if __name__ == '__main__':
         host = WEBHOOK_HOST,
         port = WEBAPP_PORT
     )
-
+"""
 
 
 """"
